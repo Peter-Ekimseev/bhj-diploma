@@ -11,9 +11,15 @@ class TransactionsWidget {
    * Если переданный элемент не существует,
    * необходимо выкинуть ошибку.
    * */
-  constructor( element ) {
+  constructor(element) {
+    if (!element) {
+      throw new Error('Параметр element класса TransactionsWidget не задан');
+    }
+    this.element = element;
 
+    this.registerEvents();
   }
+
   /**
    * Регистрирует обработчики нажатия на
    * кнопки «Новый доход» и «Новый расход».
@@ -21,6 +27,10 @@ class TransactionsWidget {
    * экземпляра окна
    * */
   registerEvents() {
+    const income = this.element.querySelector('.btn-success');
+    const expense = this.element.querySelector('.btn-danger');
 
+    income.onclick = () => App.getModal('newIncome').open();
+    expense.onclick = () => App.getModal('newExpense').open();
   }
 }
